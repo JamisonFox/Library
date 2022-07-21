@@ -26,7 +26,8 @@ class PostRequest extends FormRequest
         return [
             'username' => 'required',
             'book_name' => 'required',
-            'desc',
+            'desc' => 'required',
+            'book_authors' => 'required',
 
         ];
     }

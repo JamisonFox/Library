@@ -18,6 +18,7 @@ class CreateAdminTable extends Migration
             $table->string('username',100)->unique();
             $table->string('book_name',100);
             $table->string('description');
+            $table->string('book_authors');
             $table->string('status');
             $table->timestamps();
         });

@@ -20,12 +20,17 @@
                     <div class="site-top-icons">
                         <ul>
                             <li><a href="{{route('personal')}}"><span class="icon icon-person">{{Auth::user()->name}}</span></a></li>
-                            <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+
                             <li>
-                                <a href="{{route('cart')}}" class="site-cart">
+                                @if(Auth::user()->role === 'admin')
+                                         <a href="{{route('admin_cart')}}" class="site-cart">
+                                    @else
+                                        <a href="{{route('cart')}}" class="site-cart">
+                                    @endif
+
                                     <span class="icon icon-shopping_cart"></span>
-                                    <span class="count">2</span>
-                                </a>
+                                        </a>
+
                             </li>
                             <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                         </ul>
@@ -41,11 +46,13 @@
                 <li class="has-children active">
                     <a href="{{route('index')}}">Home</a>
                 </li>
-                <li class="has-children">
+                <li class="">
                     <a href="{{route('about')}}">About</a>
                 </li>
                 <li><a href="{{route('catalog')}}">Catalog</a></li>
-
+                @if(Auth::user()->role === 'admin')
+                    <li><a href="{{route('admin_index')}}">Admin Panel</a></li>
+                @endif
             </ul>
         </div>
     </nav>

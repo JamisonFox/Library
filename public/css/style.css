@@ -751,3 +751,22 @@ a {
   width: 120px;
   border-radius: 50%;
   margin-bottom: 20px; }
+
+.avatar {
+    border: solid 1px #B3C2C9;
+    border-bottom: none;
+    margin-right: 15px;
+    min-width: 200px;
+    padding: 10px;
+}
+.user_name_email {
+    border: solid 1px #B3C2C9;
+    border-bottom: none;
+    margin-right: 15px;
+    min-width: 200px;
+    padding: 10px;
+}
+.rows {
+    display: flex;
+    justify-content: center;
+}

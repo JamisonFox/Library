@@ -25,7 +25,10 @@ class AdminRequest extends FormRequest
     {
         return [
             'name',
+            'description',
             'authors',
+            'pages',
+            'year',
         ];
     }
 }

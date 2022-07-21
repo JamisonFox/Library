@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                <a class="block-2-item" href="#">
+                <a class="block-2-item" href="{{route('catalog')}}">
                     <figure class="image">
                         <img src="{{asset('images/book_3.jpg')}}" alt="" class="img-fluid">
                     </figure>
@@ -13,7 +13,7 @@
                 </a>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
-                <a class="block-2-item" href="#">
+                <a class="block-2-item" href="{{route('catalog')}}">
                     <figure class="image">
                         <img src="{{asset('images/books_1.jpg')}}" alt="" class="img-fluid">
                     </figure>
@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
-                <a class="block-2-item" href="#">
+                <a class="block-2-item" href="{{route('catalog')}}">
                     <figure class="image">
                         <img src="{{asset('images/book_4.jpg')}}" alt="" class="img-fluid">
                     </figure>

@@ -20,15 +20,39 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
 </head>
-<body>
 
+<body>
+<style>
+    .my_containers {
+        max-width: 500px;
+        max-height: 650px;
+        border: 1px solid black;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5px
+    }
+    .my_wrap {
+        min-width: 400px;
+        min-height: 270px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+        flex-direction: row;
+    }
+    .my_textarea {
+       font-size:15px;
+    }
+</style>
 <div class="site-wrap">
     @include('layouts.navigation')
 
     <div class="bg-light py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cart</strong></div>
+                <div class="col-md-12 mb-0"><a href="{{route('admin_index')}}">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cart</strong></div>
             </div>
         </div>
     </div>
@@ -36,125 +60,42 @@
     <div class="site-section">
         <div class="container">
             <div class="row mb-5">
-                <form class="col-md-12" method="post">
+                <div class="col-md-12">
                     <div class="site-blocks-table">
 
+                        <form action="{{route('admin_post')}}" method="post">
+                            @csrf
 
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th class="product-thumbnail">Image</th>
-                                <th class="product-name">Product</th>
-                                <th class="product-price">Price</th>
-                                <th class="product-quantity">Quantity</th>
-                                <th class="product-total">Total</th>
-                                <th class="product-remove">Remove</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
+                            <div class="my_containers">
+                                <div class="my_wrap">
+                                <div class="my_sec_cont">
 
-                                <td class="product-thumbnail">
-                                    <img src="images/cloth_1.jpg" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-
-                                </td>
-                                <td><input type="text" name="authors" id="authors"></td>
-                                <td>
-                                    <div class="input-group mb-3" style="max-width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                                        </div>
-                                        <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                                        </div>
-                                    </div>
-
-                                </td>
-                                <td>  </td>
-
-
-                            </tr>
-
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </form>
-            </div>
-            <form action="{{route('admin_post')}}" method="post">
-                @csrf
-                <input type="text" name="name" id="name">
-                <input type="text" name="authors" id="authors">
-                <p><strong>Выбери категории</strong></p>
-                   <select name="categories[]" multiple>
-                       @foreach(\App\Models\Category::all() as $el)
-                        <option value="{{$el->id}}">{{$el->name}}</option>
-                       @endforeach
-                    </select>
-                <input type="submit">Send
-               </form>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row mb-5">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="text-black h4" for="coupon">Coupon</label>
-                            <p>Enter your coupon code if you have one.</p>
-                        </div>
-                        <div class="col-md-8 mb-3 mb-md-0">
-                            <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary btn-sm">Apply Coupon</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 pl-5">
-                    <div class="row justify-content-end">
-                        <div class="col-md-7">
-                            <div class="row">
-                                <div class="col-md-12 text-right border-bottom mb-5">
-                                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                                    <p><input type="text" name="name" id="name" placeholder="Book name"></p>
+                                    <p><input type="text" name="authors" id="authors" placeholder="authors"></p>
+                                    <p><input type="text" name="pages" id="pages" placeholder="pages"></p>
+                                    <p><textarea class="my_textarea" rows="7" cols="25" name="description" id="description" placeholder="description"></textarea></p>
+                                    <p><input type="text" name="year" id="year" placeholder="year"></p>
                                 </div>
+                                <div class="my_third_cont">
+                                    <p><strong>Выбери категории</strong></p>
+                                    <p><select name="categories[]" multiple>
+                                            @foreach(\App\Models\Category::all() as $el)
+                                                <option value="{{$el->id}}">{{$el->name}}</option>
+                                            @endforeach
+                                    </select></p>
+                                </div>
+                                </div>
+                            <input type="submit" value="Send">
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <span class="text-black">Subtotal</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
-                                </div>
-                            </div>
-                            <div class="row mb-5">
-                                <div class="col-md-6">
-                                    <span class="text-black">Total</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
-                                </div>
-                            </div>
+                        </form>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
+
+
+
         </div>
     </div>
 

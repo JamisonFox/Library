@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,7 +22,13 @@
 
   </head>
   <body>
-
+  <style>
+      .line-limit-length {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap; // Текст не переносится, поэтому часть, которая превышает одну строку, перехватывается и отображается ...
+      }
+  </style>
   <div class="site-wrap">
       @include('layouts.navigation')
 
@@ -73,11 +80,11 @@
               <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                 <div class="block-4 text-center border">
                   <figure class="block-4-image">
-                    <a href="{{route('book_id',['id' => $el->id])}}"><img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid"></a>
+                    <a href="{{route('book_id',['id' => $el->id])}}"><img src="{{asset('images/book_7.jpg')}}" alt="Image placeholder" class="img-fluid"></a>
                   </figure>
                   <div class="block-4-text p-4">
                     <h3><a href="{{route('book_id',['id' => $el->id])}}">{{$el->name}}</a></h3>
-                    <p class="mb-0">{{$el->description}}</p>
+                    <p class="line-limit-length mb-0">{{$el->description}}</p>
                     <p class="text-primary font-weight-bold">{{$el->authors}}</p>
                   </div>
                 </div>
@@ -90,9 +97,11 @@
               <div class="col-md-12 text-center">
                 <div class="site-block-27">
                   <ul>
-                      <h1>{{ $books->CurrentPage() * $books->Perpage() }}--{{$books->total()}}</h1>
-
-                    <li>{{ $books->appends(['search' => request()->search])->links('vendor/pagination/default') }}</li>
+                      @if($books->CurrentPage() * $books->Perpage() > $books->total())
+                        <h1>{{$books->CurrentPage() * $books->Perpage() - ($books->CurrentPage() * $books->Perpage() - $books->total())}}--{{$books->total()}}</h1>
+                      @else <h1>{{ $books->CurrentPage() * $books->Perpage() }}--{{$books->total()}}</h1>
+                          @endif
+                    <li>{{ $books->appends(['search' => request()->search, 'category' => request()->category])->links('vendor/pagination/default') }}</li>
 
                   </ul>
                 </div>
@@ -100,50 +109,23 @@
             </div>
           </div>
 
-          <div class="col-md-3 order-1 mb-5 mb-md-0">
-            <div class="border p-4 rounded mb-4">
-              <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
-              <ul class="list-unstyled mb-0">
-                <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span class="text-black ml-auto">(2,220)</span></a></li>
-                <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span class="text-black ml-auto">(2,550)</span></a></li>
-                <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span class="text-black ml-auto">(2,124)</span></a></li>
-              </ul>
-            </div>
+
 
             <div class="border p-4 rounded mb-4">
-                <div class="mb-4">
-                    <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
-                    <div id="slider-range" class="border-primary"></div>
-                    <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
-                </div>
+
 
                 <div class="mb-4">
                     <form action="{{route('catalog')}}" method="get">
-                    <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
+                    <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                     @foreach(\App\Models\Category::all() as $el)
                     <label for="s_sm" class="d-flex">
                         <input type="checkbox" id="{{$el->id}}" name="category[]" value="{{$el->id}}"class="mr-2 mt-1"><span class="text-black">{{$el->name}}</span>
                     </label>
                     @endforeach
-                    <input type="submit">
+                    <input type="submit" value="Choose">
                     </form>
                 </div>
 
-                <div class="mb-4">
-                    <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
-                    <a href="#" class="d-flex color-item align-items-center" >
-                        <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Red (2,429)</span>
-                    </a>
-                    <a href="#" class="d-flex color-item align-items-center" >
-                        <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Green (2,298)</span>
-                    </a>
-                    <a href="#" class="d-flex color-item align-items-center" >
-                        <span class="bg-info color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Blue (1,075)</span>
-                    </a>
-                    <a href="#" class="d-flex color-item align-items-center" >
-                        <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Purple (1,075)</span>
-                    </a>
-                </div>
 
             </div>
           </div>
@@ -152,10 +134,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="site-section site-blocks-2">
-                <div class="row justify-content-center text-center mb-5">
-                  <div class="col-md-7 site-section-heading pt-4">
+                <div class="row justify-content-center text-center">
+
                     <h2>Categories</h2>
-                  </div>
+
                 </div>
                 @include('layouts.collections')
 
@@ -167,7 +149,7 @@
     </div>
 
   @include('layouts.footer')
-  </div>
+  // убран тег div от wrap
 
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('js/jquery-ui.js')}}"></script>
